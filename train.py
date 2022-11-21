@@ -34,6 +34,8 @@ sgd = tf.keras.optimizers.Adam(learning_rate=0.001, beta_1=0.9, beta_2=0.999, ep
 # compile model
 model.compile(loss=tf.keras.metrics.mean_squared_error, optimizer=sgd)
 
+print(model.summary())
+
 cpoint = keras.callbacks.ModelCheckpoint(filepath=os.path.join(model_path, model_name),
                                          monitor='loss',
                                          save_best_only=True,
