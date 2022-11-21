@@ -24,7 +24,7 @@ ds = dataset.Dataset("./Data/AI Match Results 150years_appended_WC2022.txt")
 print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
 # output path for saving model
-model_path = 'models/03_custom_upscale/'
+model_path = 'models/00_custom/'
 model_name = '00.hdf5'
 
 model = m.prepare_model_custom(ds.input_d())
@@ -40,7 +40,7 @@ cpoint = keras.callbacks.ModelCheckpoint(filepath=os.path.join(model_path, model
                                          verbose=1)
 
 # train model
-callback_history = model.fit(ds, batch_size=1000, epochs=400,
+callback_history = model.fit(ds, batch_size=10000, epochs=400,
                              callbacks=[cpoint])
 # save information about training in txt files
 loss_history = callback_history.history["loss"]
