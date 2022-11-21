@@ -9,11 +9,8 @@ def prepare_model_custom(input_d):
 
     # define model architecture
     model.add(Dense(input_d))
-    model.add(Dense(512))
-    model.add(Dense(256))
-    model.add(Dense(128))
+    model.add(Dense(22))
     model.add(ReLU())
-    model.add(Dense(4))
-    model.add(Dense(2, activation=ReLU()))
+    model.add(Dense(2, activation='relu'))
 
     return model

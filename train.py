@@ -24,7 +24,7 @@ ds = dataset.Dataset("./Data/AI Match Results 150years_appended_WC2022.txt")
 print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
 # output path for saving model
-model_path = 'models/00_custom/'
+model_path = 'models/00/'
 model_name = '00.hdf5'
 
 model = m.prepare_model_custom(ds.input_d())
@@ -32,7 +32,7 @@ model = m.prepare_model_custom(ds.input_d())
 # setup optimizer and compile model
 sgd = tf.keras.optimizers.Adam(learning_rate=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-07, amsgrad=False)
 # compile model
-model.compile(loss=tf.keras.metrics.mean_squared_error, optimizer=sgd, metrics=['acc'])
+model.compile(loss=tf.keras.metrics.mean_squared_error, optimizer=sgd)
 
 cpoint = keras.callbacks.ModelCheckpoint(filepath=os.path.join(model_path, model_name),
                                          monitor='loss',
