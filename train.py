@@ -12,7 +12,7 @@ from tensorflow.compat.v1 import InteractiveSession
 
 import data_preprocessing
 
-X_train, Y_train, X_val, Y_val, X_test = data_preprocessing.Dataset().get_input_data()
+X_train, Y_train, X_val, Y_val, X_test, sample_weights_train, sample_weights_val = data_preprocessing.Dataset().get_input_data(sample_weights_degree=2)
 
 def fix_gpu():
     config = ConfigProto()
@@ -53,7 +53,7 @@ cpoint = keras.callbacks.ModelCheckpoint(filepath=os.path.join(model_path, model
                                          verbose=1)
 
 # train model
-callback_history = model.fit(tds, sample_weight=, batch_size=1000, epochs=100, validation_data=vds,
+callback_history = model.fit(X_train, Y_train, sample_weight=sample_weights_train, batch_size=1000, epochs=100, validation_data=vds,
                              callbacks=[cpoint])
 
 # save information about training in txt files

@@ -14,6 +14,7 @@ def prepare_model_custom(input_shape, model_path):
         model.add(Dense(2))
 
         return model
+
     if model_path == "models/01/":
         model = Sequential()
         # define model architecture

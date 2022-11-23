@@ -20,7 +20,7 @@ fix_gpu()
 
 
 preprocessed_data = data_preprocessing.Dataset()
-X_train, Y_train, X_val, Y_val, X_test = preprocessed_data.get_input_data()
+X_train, Y_train, X_val, Y_val, X_test, sample_weights_train, sample_weights_val = preprocessed_data.get_input_data(sample_weights_degree=2)
 all_teams = preprocessed_data.all_teams
 
 ds = dataset.FootballDataset(X_test, None, prediction=True)
@@ -37,6 +37,6 @@ for x, y in ds:
     home_team = all_teams[np.where(home_team_part == 1)[0][0]]
     away_team = all_teams[np.where(away_team_part == 1)[0][0]]
     y = model.predict(x)
-    print(home_team, " x ", away_team, ": ", y)
+    print(home_team, " x ", away_team, ": ", np.hstack([y[0][1], y[0][1] - y[0][0]]))
     with open(os.path.join("./predictions/", model_path.split('/')[1] + ".txt"), "a") as f:
-        f.write(home_team + " x " + away_team + ": " + str(y))
+        f.write(home_team + " x " + away_team + ": " + str(np.hstack([y[0][1], y[0][1] - y[0][0]])) + "\n")
