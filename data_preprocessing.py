@@ -62,6 +62,7 @@ class Dataset:
         self.Y_labeled: np.array
         
         self.predict_values: str
+        self.label_weights: np.array
 
 
     def load_raw_data(self):
@@ -88,7 +89,7 @@ class Dataset:
         self.df = self.df.drop(drop_columns, axis=1)
 
 
-    def prepare_input_data(self, df: pd.DataFrame, predict_values = "difference", tournament_group_added = True):
+    def prepare_input_data(self, df: pd.DataFrame, predict_values = "difference", tournament_group_added = True, label_weights = [1, 1]):
         """ Performs data vectorization (categories -> onehot vectors """
         
         self.predict_values = predict_values
@@ -98,12 +99,20 @@ class Dataset:
         if tournament_group_added:
             X = np.hstack([X, np.vstack(df.tournament_group.apply(lambda x: self.tournament_group_to_onehot[x]))])
         X = np.hstack([X, np.vstack(df.home_advantage)])
-
+        
+        label_weights = np.array(label_weights)
+        if not len(label_weights) == 2:
+            label_weights = np.ones(2)
+            print("label_weights do not match")
+            
         Y = np.hstack([np.vstack(df.home_score), np.vstack(df.away_score)])
 
         if self.predict_values  == "difference":
             # Apply y = [goal difference (home-away), winner_goals] instead of exact score [home_goals, away_goals]
             Y = np.hstack((np.vstack(Y[:, 0] - Y[:, 1]), np.vstack(np.max(Y, axis = 1))))
+            
+        self.label_weights = label_weights
+        Y = Y * label_weights
 
         print("X shape = ", X.shape)
         print("Y shape = ", Y.shape)
@@ -116,6 +125,7 @@ class Dataset:
                         strip_columns = ["home_team", "away_team", "tournament"],
                         add_tournament_group = True,
                         predict_values = "difference",
+                        label_weights = [1, 1],
                         trainval_split = 0.7,
                         ):
 
@@ -145,8 +155,8 @@ class Dataset:
             self.all_tournament_groups = sorted(self.df.tournament_group.unique().tolist())
             self.tournament_group_to_onehot = dict((tg, onehot_encode(self.all_tournament_groups, tg)) for tg in self.all_tournament_groups)
         
-        self.X_labeled, self.Y_labeled = self.prepare_input_data(self.df_labeled_testonly, predict_values=predict_values, tournament_group_added=add_tournament_group)
-        X_test, _ = self.prepare_input_data(self.df_test_testonly)
+        self.X_labeled, self.Y_labeled = self.prepare_input_data(self.df_labeled_testonly, predict_values=predict_values, tournament_group_added=add_tournament_group, label_weights=label_weights)
+        X_test, _ = self.prepare_input_data(self.df_test_testonly, label_weights=label_weights)
         
         # Train x val split
         trainval_split_index = int(len(self.X_labeled) * trainval_split)
