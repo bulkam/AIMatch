@@ -40,6 +40,11 @@ def onehot_encode(all_categories, category):
     onehot[all_categories.index(category)] = 1
     return onehot
 
+
+def add_sample_weights(df: pd.DataFrame, degree = 0):
+    df["sample_weight"] = (np.arange(len(df)) / len(df)) ** degree
+    return df
+
 class Dataset:
     
     def __init__(self, 
@@ -60,6 +65,7 @@ class Dataset:
         
         self.X_labeled: np.array
         self.Y_labeled: np.array
+        self.sample_weights_labeled: np.array
         
         self.predict_values: str
         self.label_weights: np.array
@@ -72,7 +78,9 @@ class Dataset:
     def preprocess_data(self,
                         drop_columns: list, 
                         strip_columns: list,
-                        add_tournament_group = True):
+                        add_tournament_group = True,
+                        sample_weights_degree = 0,
+                        ):
         
         # Strip string values in columns
         for col in strip_columns:
@@ -84,6 +92,9 @@ class Dataset:
 
         # Add home advantage column
         self.df["home_advantage"] = self.df.neutral.apply(home_advantage)
+        
+        # Create sample weights
+        self.df["sample_weight"] = (np.arange(len(self.df)) / len(self.df)) ** sample_weights_degree
 
         # Drop some columns at the end
         self.df = self.df.drop(drop_columns, axis=1)
@@ -113,11 +124,14 @@ class Dataset:
             
         self.label_weights = label_weights
         Y = Y * label_weights
+        
+        sample_weights = np.array(df["sample_weight"])
 
         print("X shape = ", X.shape)
         print("Y shape = ", Y.shape)
+        print("sample weights shape = ", sample_weights.shape)
 
-        return X, Y
+        return X, Y, sample_weights
 
 
     def get_input_data(self,
@@ -127,11 +141,12 @@ class Dataset:
                         predict_values = "difference",
                         label_weights = [1, 1],
                         trainval_split = 0.7,
+                        sample_weights_degree = 0,
                         ):
 
         # Load and preprocess data
         self.load_raw_data()
-        self.preprocess_data(drop_columns=drop_columns, strip_columns=strip_columns)
+        self.preprocess_data(drop_columns=drop_columns, strip_columns=strip_columns, sample_weights_degree=sample_weights_degree)
         
         # Split labeled (train + val) and test (unlabeled)
         self.df_labeled = self.df[self.df.home_score.notnull()]
@@ -155,16 +170,18 @@ class Dataset:
             self.all_tournament_groups = sorted(self.df.tournament_group.unique().tolist())
             self.tournament_group_to_onehot = dict((tg, onehot_encode(self.all_tournament_groups, tg)) for tg in self.all_tournament_groups)
         
-        self.X_labeled, self.Y_labeled = self.prepare_input_data(self.df_labeled_testonly, predict_values=predict_values, tournament_group_added=add_tournament_group, label_weights=label_weights)
-        X_test, _ = self.prepare_input_data(self.df_test_testonly, label_weights=label_weights)
+        self.X_labeled, self.Y_labeled, self.sample_weights_labeled = self.prepare_input_data(self.df_labeled_testonly, predict_values=predict_values, tournament_group_added=add_tournament_group, label_weights=label_weights)
+        X_test, _, _ = self.prepare_input_data(self.df_test_testonly, label_weights=label_weights)
         
         # Train x val split
         trainval_split_index = int(len(self.X_labeled) * trainval_split)
         X_train, Y_train = self.X_labeled[:trainval_split_index], self.Y_labeled[:trainval_split_index]
         X_val, Y_val = self.X_labeled[trainval_split_index:], self.Y_labeled[trainval_split_index:]
+        sample_weights_train = self.sample_weights_labeled[:trainval_split_index]
+        sample_weights_val = self.sample_weights_labeled[trainval_split_index:]
         
-        return X_train, Y_train, X_val, Y_val, X_test
+        return X_train, Y_train, X_val, Y_val, X_test, sample_weights_train, sample_weights_val
     
     
 if __name__ == "__main__":
-    X_train, Y_train, X_val, Y_val, X_test = Dataset().get_input_data() # see which parameters can be modified
+    X_train, Y_train, X_val, Y_val, X_test, sample_weights_train, sample_weights_val = Dataset().get_input_data(sample_weights_degree=2) # see which parameters can be modified
