@@ -11,8 +11,7 @@ def prepare_model_custom(input_shape, model_path):
         model.add(Input(input_shape))
         model.add(Dense(input_shape[0]))
         model.add(Dense(22))
-        model.add(ReLU())
-        model.add(Dense(2, activation='relu'))
+        model.add(Dense(2))
 
         return model
     if model_path == "models/01/":
@@ -20,7 +19,7 @@ def prepare_model_custom(input_shape, model_path):
         # define model architecture
         model.add(Input(input_shape))
         model.add(Dense(input_shape[0]))
-        model.add(Dense(2, activation='relu'))
+        model.add(Dense(2))
 
         return model
 
@@ -32,8 +31,7 @@ def prepare_model_custom(input_shape, model_path):
         model.add(Dense(128))
         model.add(ReLU())
         model.add(Dense(22))
-        model.add(ReLU())
-        model.add(Dense(2, activation='relu'))
+        model.add(Dense(2))
 
         return model
 
@@ -45,7 +43,6 @@ def prepare_model_custom(input_shape, model_path):
         model.add(Dense(1024))
         model.add(ReLU())
         model.add(Dense(16))
-        model.add(ReLU())
-        model.add(Dense(2, activation='relu'))
+        model.add(Dense(2))
 
         return model

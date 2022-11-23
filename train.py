@@ -53,7 +53,7 @@ cpoint = keras.callbacks.ModelCheckpoint(filepath=os.path.join(model_path, model
                                          verbose=1)
 
 # train model
-callback_history = model.fit(tds, batch_size=1000, epochs=100, validation_data=vds,
+callback_history = model.fit(tds, sample_weight=, batch_size=1000, epochs=100, validation_data=vds,
                              callbacks=[cpoint])
 
 # save information about training in txt files
