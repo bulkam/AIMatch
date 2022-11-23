@@ -10,6 +10,9 @@ import model as m
 from tensorflow.compat.v1 import ConfigProto
 from tensorflow.compat.v1 import InteractiveSession
 
+import data_preprocessing
+
+X_train, Y_train, X_val, Y_val, X_test = data_preprocessing.Dataset().get_input_data()
 
 def fix_gpu():
     config = ConfigProto()
@@ -19,31 +22,40 @@ def fix_gpu():
 fix_gpu()
 
 
-ds = dataset.Dataset("./Data/AI Match Results 150years_appended_WC2022.txt")
+tds = dataset.FootballDataset(X_train, Y_train)
+vds = dataset.FootballDataset(X_val, Y_val)
+
+print(tds.__getitem__(0)[0].shape, tds.__getitem__(0)[1].shape)
 
 print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
 # output path for saving model
-model_path = 'models/00/'
+model_path = 'models/03/'
 model_name = '00.hdf5'
 
-model = m.prepare_model_custom(ds.input_d())
+model = m.prepare_model_custom(tds.input_size(), model_path)
+
 
 # setup optimizer and compile model
-sgd = tf.keras.optimizers.Adam(learning_rate=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-07, amsgrad=False)
+adam = tf.keras.optimizers.Adam(learning_rate=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-07, amsgrad=False)
+
+
 # compile model
-model.compile(loss=tf.keras.metrics.mean_squared_error, optimizer=sgd)
+model.compile(loss=tf.keras.metrics.mean_squared_error, optimizer=adam)
 
 print(model.summary())
+print(len(tds))
+print(len(vds))
 
 cpoint = keras.callbacks.ModelCheckpoint(filepath=os.path.join(model_path, model_name),
-                                         monitor='loss',
+                                         monitor='val_loss',
                                          save_best_only=True,
                                          verbose=1)
 
 # train model
-callback_history = model.fit(ds, batch_size=10000, epochs=400,
+callback_history = model.fit(tds, batch_size=1000, epochs=100, validation_data=vds,
                              callbacks=[cpoint])
+
 # save information about training in txt files
 loss_history = callback_history.history["loss"]
 val_loss_history = callback_history.history["val_loss"]
