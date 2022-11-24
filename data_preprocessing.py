@@ -174,6 +174,8 @@ class Dataset:
         X_test, _, _ = self.prepare_input_data(self.df_test_testonly, label_weights=label_weights)
         
         # Train x val split
+        
+        
         trainval_split_index = int(len(self.X_labeled) * trainval_split)
         X_train, Y_train = self.X_labeled[:trainval_split_index], self.Y_labeled[:trainval_split_index]
         X_val, Y_val = self.X_labeled[trainval_split_index:], self.Y_labeled[trainval_split_index:]
