@@ -80,6 +80,7 @@ class Dataset:
                         strip_columns: list,
                         add_tournament_group = True,
                         sample_weights_degree = 0,
+                        keep_tail = 0,
                         ):
         
         # Strip string values in columns
@@ -97,7 +98,7 @@ class Dataset:
         self.df["sample_weight"] = (np.arange(len(self.df)) / len(self.df)) ** sample_weights_degree
 
         # Drop some columns at the end
-        self.df = self.df.drop(drop_columns, axis=1)
+        self.df = self.df.drop(drop_columns, axis=1).tail(len(self.df)//keep_tail)
 
 
     def prepare_input_data(self, df: pd.DataFrame, predict_values = "difference", tournament_group_added = True, label_weights = [1, 1]):
@@ -140,13 +141,15 @@ class Dataset:
                         add_tournament_group = True,
                         predict_values = "difference",
                         label_weights = [1, 1],
-                        trainval_split = 0.7,
+                        trainval_split = 0.9,
                         sample_weights_degree = 0,
+                        random_split = False,
+                        keep_tail = 1,
                         ):
 
         # Load and preprocess data
         self.load_raw_data()
-        self.preprocess_data(drop_columns=drop_columns, strip_columns=strip_columns, sample_weights_degree=sample_weights_degree)
+        self.preprocess_data(drop_columns=drop_columns, strip_columns=strip_columns, sample_weights_degree=sample_weights_degree, keep_tail=keep_tail)
         
         # Split labeled (train + val) and test (unlabeled)
         self.df_labeled = self.df[self.df.home_score.notnull()]
@@ -173,14 +176,20 @@ class Dataset:
         self.X_labeled, self.Y_labeled, self.sample_weights_labeled = self.prepare_input_data(self.df_labeled_testonly, predict_values=predict_values, tournament_group_added=add_tournament_group, label_weights=label_weights)
         X_test, _, _ = self.prepare_input_data(self.df_test_testonly, label_weights=label_weights)
         
-        # Train x val split
-        
-        
+        # Train x val split        
         trainval_split_index = int(len(self.X_labeled) * trainval_split)
-        X_train, Y_train = self.X_labeled[:trainval_split_index], self.Y_labeled[:trainval_split_index]
-        X_val, Y_val = self.X_labeled[trainval_split_index:], self.Y_labeled[trainval_split_index:]
-        sample_weights_train = self.sample_weights_labeled[:trainval_split_index]
-        sample_weights_val = self.sample_weights_labeled[trainval_split_index:]
+        indexes = [i for i in range(len(self.X_labeled))]
+        
+        if random_split:
+            np.random.shuffle(indexes)
+            
+        train_indexes = indexes[:trainval_split_index]
+        val_indexes = indexes[trainval_split_index:]
+            
+        X_train, Y_train = self.X_labeled[train_indexes], self.Y_labeled[train_indexes]
+        X_val, Y_val = self.X_labeled[val_indexes], self.Y_labeled[val_indexes]
+        sample_weights_train = self.sample_weights_labeled[train_indexes]
+        sample_weights_val = self.sample_weights_labeled[val_indexes]
         
         return X_train, Y_train, X_val, Y_val, X_test, sample_weights_train, sample_weights_val
     

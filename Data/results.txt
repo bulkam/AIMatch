@@ -1,0 +1,65 @@
+date,home_team,away_team,home_score,away_score,tournament,city,country,neutral
+20.11.2022,Qatar,Ecuador,0,2,FIFA World Cup 2022,Al Bayt,Qatar,FALSE
+21.11.2022,England,Iran,6,2,FIFA World Cup 2022,Khalifa International,Qatar,TRUE
+21.11.2022,Senegal,Netherlands,0,2,FIFA World Cup 2022,Al Thumama,Qatar,TRUE
+21.11.2022,United States,Wales,1,1,FIFA World Cup 2022,Ahmad bin Ali,Qatar,TRUE
+22.11.2022,Argentina,Saudi Arabia,1,2,FIFA World Cup 2022,Lusail Iconic,Qatar,TRUE
+22.11.2022,Denmark,Tunisia,0,0,FIFA World Cup 2022,Education City,Qatar,TRUE
+22.11.2022,Mexico,Poland,0,0,FIFA World Cup 2022,Stadium 974,Qatar,TRUE
+22.11.2022,France,Australia,4,1,FIFA World Cup 2022,Al Janoub,Qatar,TRUE
+23.11.2022,Morocco,Croatia,0,0,FIFA World Cup 2022,Al Bayt,Qatar,TRUE
+23.11.2022,Germany,Japan,1,2,FIFA World Cup 2022,Khalifa International,Qatar,TRUE
+23.11.2022,Spain,Costa Rica,7,0,FIFA World Cup 2022,Al Thumama,Qatar,TRUE
+23.11.2022,Belgium,Canada,1,0,FIFA World Cup 2022,Ahmad bin Ali,Qatar,TRUE
+24.11.2022,Switzerland,Cameroon,1,0,FIFA World Cup 2022,Al Janoub,Qatar,TRUE
+24.11.2022,Uruguay,South Korea,0,0,FIFA World Cup 2022,Education City,Qatar,TRUE
+24.11.2022,Portugal,Ghana,3,2,FIFA World Cup 2022,Stadium 974,Qatar,TRUE
+24.11.2022,Brazil,Serbia,3,2,FIFA World Cup 2022,Lusail Iconic,Qatar,TRUE
+25.11.2022,Wales,Iran,0,2,FIFA World Cup 2022,Ahmad bin Ali,Qatar,TRUE
+25.11.2022,Qatar,Senegal,,,FIFA World Cup 2022,Al Thumama,Qatar,FALSE
+25.11.2022,Netherlands,Ecuador,,,FIFA World Cup 2022,Khalifa International,Qatar,TRUE
+25.11.2022,England,United States,,,FIFA World Cup 2022,Al Bayt,Qatar,TRUE
+26.11.2022,Tunisia,Australia,,,FIFA World Cup 2022,Al Janoub,Qatar,TRUE
+26.11.2022,Poland,Saudi Arabia,,,FIFA World Cup 2022,Education City,Qatar,TRUE
+26.11.2022,France,Denmark,,,FIFA World Cup 2022,Stadium 974,Qatar,TRUE
+26.11.2022,Argentina,Mexico,,,FIFA World Cup 2022,Lusail Iconic,Qatar,TRUE
+27.11.2022,Japan,Costa Rica,,,FIFA World Cup 2022,Ahmad bin Ali,Qatar,TRUE
+27.11.2022,Belgium,Morocco,,,FIFA World Cup 2022,Al Thumama,Qatar,TRUE
+27.11.2022,Croatia,Canada,,,FIFA World Cup 2022,Khalifa International,Qatar,TRUE
+27.11.2022,Spain,Germany,,,FIFA World Cup 2022,Al Bayt,Qatar,TRUE
+28.11.2022,Cameroon,Serbia,,,FIFA World Cup 2022,Al Janoub,Qatar,TRUE
+28.11.2022,South Korea,Ghana,,,FIFA World Cup 2022,Education City,Qatar,TRUE
+28.11.2022,Brazil,Switzerland,,,FIFA World Cup 2022,Stadium 974,Qatar,TRUE
+28.11.2022,Portugal,Uruguay,,,FIFA World Cup 2022,Lusail Iconic,Qatar,TRUE
+29.11.2022,Ecuador,Senegal,,,FIFA World Cup 2022,Khalifa International,Qatar,TRUE
+29.11.2022,Netherlands,Qatar,,,FIFA World Cup 2022,Al Bayt,Qatar,FALSE
+29.11.2022,Wales,England,,,FIFA World Cup 2022,Ahmad bin Ali,Qatar,TRUE
+29.11.2022,Iran,United States,,,FIFA World Cup 2022,Al Thumama,Qatar,TRUE
+30.11.2022,Australia,Denmark,,,FIFA World Cup 2022,Al Janoub,Qatar,TRUE
+30.11.2022,Tunisia,France,,,FIFA World Cup 2022,Education City,Qatar,TRUE
+30.11.2022,Poland,Argentina,,,FIFA World Cup 2022,Stadium 974,Qatar,TRUE
+30.11.2022,Saudi Arabia,Mexico,,,FIFA World Cup 2022,Lusail Iconic,Qatar,TRUE
+01.12.2022,Croatia,Belgium,,,FIFA World Cup 2022,Ahmad bin Ali,Qatar,TRUE
+01.12.2022,Canada,Morocco,,,FIFA World Cup 2022,Al Thumama,Qatar,TRUE
+01.12.2022,Japan,Spain,,,FIFA World Cup 2022,Khalifa International,Qatar,TRUE
+01.12.2022,Costa Rica,Germany,,,FIFA World Cup 2022,Al Bayt,Qatar,TRUE
+02.12.2022,Ghana,Uruguay,,,FIFA World Cup 2022,Al Janoub,Qatar,TRUE
+02.12.2022,South Korea,Portugal,,,FIFA World Cup 2022,Education City,Qatar,TRUE
+02.12.2022,Serbia,Switzerland,,,FIFA World Cup 2022,Stadium 974,Qatar,TRUE
+02.12.2022,Cameroon,Brazil,,,FIFA World Cup 2022,Lusail Iconic,Qatar,TRUE
+03.12.2022,Winners Group A,Runners-up Group B,,,FIFA World Cup 2022,BKhalifa International,Qatar,
+03.12.2022,Winners Group C,Runners-up Group D,,,FIFA World Cup 2022,Ahmad bin Ali,Qatar,
+04.12.2022,Winners Group D,Runners-up Group C,,,FIFA World Cup 2022,Al Thumama,Qatar,
+04.12.2022,Winners Group B,Runners-up Group A,,,FIFA World Cup 2022,Al Bayt,Qatar,
+05.12.2022,Winners Group E,Runners-up Group F,,,FIFA World Cup 2022,Al Janoub,Qatar,
+05.12.2022,Winners Group G,Runners-up Group H,,,FIFA World Cup 2022,Stadium 974,Qatar,
+06.12.2022,Winners Group F,Runners-up Group E,,,FIFA World Cup 2022,Education City,Qatar,
+06.12.2022,Winners Group H,Runners-up Group G,,,FIFA World Cup 2022,Lusail Iconic,Qatar,
+09.12.2022,Winners Match 53,Winners Match 54,,,FIFA World Cup 2022,Education City,Qatar,
+09.12.2022,Winners Match 49,Winners Match 50,,,FIFA World Cup 2022,Lusail Iconic,Qatar,
+10.12.2022,Winners Match 55,Winners Match 56,,,FIFA World Cup 2022,Al Thumama,Qatar,
+10.12.2022,Winners Match 51,Winners Match 52,,,FIFA World Cup 2022,Al Bayt,Qatar,
+13.12.2022,Winners Match 57,Winners Match 58,,,FIFA World Cup 2022,Lusail Iconic,Qatar,
+14.12.2022,Winners Match 59,Winners Match 60,,,FIFA World Cup 2022,Al Bayt,Qatar,
+17.12.2022,Losers Match 61,Losers Match 62,,,FIFA World Cup 2022,Khalifa International,Qatar,
+18.12.2022,Winners Match 61,Winners Match 62,,,FIFA World Cup 2022,Lusail Iconic,Qatar,

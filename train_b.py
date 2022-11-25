@@ -60,15 +60,15 @@ def predictions_to_goals(Y, label_weights):
     return np.vstack([prediction_to_goals(Y[i], label_weights) for i in range(len(Y))])
 
 
-def show_predictions(X, Y, Y_pred, indexes, label_weights):
+def show_predictions(dataset, X, Y, Y_pred, indexes, label_weights):
     for i in indexes:
         x = X[i]
         home_team_part = x[:len(dataset.all_teams)]
         away_team_part = x[len(dataset.all_teams):2*len(dataset.all_teams)]
         home_team = dataset.all_teams[np.where(home_team_part == 1)[0][0]]
         away_team = dataset.all_teams[np.where(away_team_part == 1)[0][0]]
-        print(home_team, " x ", away_team, ": ", prediction_to_goals(Y_pred[i], label_weights), "-", prediction_to_goals(Y[i], label_weights), " ...................  output (weighted): ", Y_pred[i], Y[i], "   original: ", Y_pred[i]/label_weights, Y[i]/label_weights)
-        logging.info([home_team, " x ", away_team, ": ", prediction_to_goals(Y_pred[i], label_weights), "-", prediction_to_goals(Y[i], label_weights), " ...................  output (weighted): ", Y_pred[i], Y[i], "   original: ", Y_pred[i]/label_weights, Y[i]/label_weights])
+        print(home_team, " x ", away_team, ": ", prediction_to_goals(Y_pred[i], label_weights), "-", Y[i], " ...................  output (weighted): ", Y_pred[i], Y[i], "   original: ", Y_pred[i]/label_weights, Y[i]/label_weights)
+        logging.info([home_team, " x ", away_team, ": ", prediction_to_goals(Y_pred[i], label_weights), "-", Y[i], " ...................  output (weighted): ", Y_pred[i], Y[i], "   original: ", Y_pred[i]/label_weights, Y[i]/label_weights])
 
 
 class Scorer(Callback):
